@@ -1,0 +1,537 @@
+﻿*,
+*::after,
+*::before {
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+}
+
+:root {
+        --square-size: 50px;
+        --mark-size: calc(var(--square-size) * 0.9);
+        --progress-square-size: 50px;
+        --progress-mark-size: calc(var(--square-size) * 0.9);
+}
+
+body {
+        margin: 0;
+}
+
+.game {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 50px;
+}
+
+.game>* {
+        margin: auto;
+        flex-shrink: 1;
+        justify-content: center;
+}
+
+.game-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+
+.game-info>* {
+        margin: 10px;
+}
+
+.move-history {
+        display: flex;
+        flex-direction: column;
+}
+
+.play-board-container {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        align-items: center;
+}
+
+.board {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        justify-items: center;
+        align-items: center;
+        grid-template-columns: repeat(9, auto);
+        float: left;
+}
+
+.progress-board-container {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        align-items: center;
+}
+
+.progress-board {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        justify-items: center;
+        align-items: center;
+        grid-template-columns: repeat(3, auto);
+        float: left;
+}
+
+.text {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 1.2em;
+        width: fit-content;
+        margin-bottom: 10px;
+}
+
+button {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 1.2em;
+}
+
+.submit-button {
+        margin-top: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        background: #01d28e;
+        border: 1px solid #01d28e;
+        color: #fff;
+        padding: 10px 20px;
+}
+
+.square {
+        width: var(--square-size);
+        height: var(--square-size);
+        border: 1px solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+}
+
+.square:first-child,
+.square:nth-child(2),
+.square:nth-child(3),
+.square:nth-child(4),
+.square:nth-child(5),
+.square:nth-child(6),
+.square:nth-child(7),
+.square:nth-child(8),
+.square:nth-child(9) {
+        border-top: none;
+}
+
+.square:nth-child(9n + 9) {
+        border-right: none;
+}
+
+.square:nth-child(9n-8) {
+        border-left: none;
+}
+
+.square:nth-child(9n + 3) {
+        border-right: 3px solid rgb(177, 217, 242);
+}
+
+.square:nth-child(9n + 4) {
+        border-left: 3px solid rgb(177, 217, 242);
+}
+
+.square:nth-child(9n + 6) {
+        border-right: 3px solid rgb(177, 217, 242);
+}
+
+.square:nth-child(9n + 7) {
+        border-left: 3px solid rgb(177, 217, 242);
+}
+
+.square:nth-child(27n + 28),
+.square:nth-child(27n + 29),
+.square:nth-child(27n + 30),
+.square:nth-child(27n + 31),
+.square:nth-child(27n + 32),
+.square:nth-child(27n + 33),
+.square:nth-child(27n + 34),
+.square:nth-child(27n + 35),
+.square:nth-child(27n + 36) {
+        border-top: 3px solid rgb(177, 217, 242);
+}
+
+.square:nth-child(27n + 19),
+.square:nth-child(27n + 20),
+.square:nth-child(27n + 21),
+.square:nth-child(27n + 22),
+.square:nth-child(27n + 23),
+.square:nth-child(27n + 24),
+.square:nth-child(27n + 25),
+.square:nth-child(27n + 26),
+.square:nth-child(27n + 27) {
+        border-bottom: 3px solid rgb(177, 217, 242);
+}
+
+.square:last-child,
+.square:nth-child(80),
+.square:nth-child(79),
+.square:nth-child(78),
+.square:nth-child(77),
+.square:nth-child(76),
+.square:nth-child(75),
+.square:nth-child(74),
+.square:nth-child(73) {
+        border-bottom: none;
+}
+
+.square.x,
+.square.circle,
+.square:not(.clickable) {
+        cursor: not-allowed;
+}
+
+.square.x::before,
+.square.x::after,
+.square.circle::before {
+        background-color: black;
+}
+
+.board.x-is-next .square.clickable:not(.x):not(.circle):hover::before,
+.board.x-is-next .square.clickable:not(.x):not(.circle):hover::after,
+.board.circle-is-next .square:not(.x):not(.circle):hover::before {
+        background-color: lightgrey;
+}
+
+.square.x::before,
+.square.x::after,
+.board.x-is-next .square:not(.x):not(.circle):hover::before,
+.board.x-is-next .square:not(.x):not(.circle):hover::after {
+        content: "";
+        position: absolute;
+        width: calc(var(--mark-size) * 0.15);
+        height: var(--mark-size);
+}
+
+.square.x::before,
+.board.x-is-next .square:not(.x):not(.circle):hover::before {
+        transform: rotate(45deg);
+}
+
+.square.x::after,
+.board.x-is-next .square:not(.x):not(.circle):hover::after {
+        transform: rotate(-45deg);
+}
+
+.square.circle::before,
+.square.circle::after,
+.board.circle-is-next .square.clickable:not(.x):not(.circle):hover::before,
+.board.circle-is-next .square.clickable:not(.x):not(.circle):hover::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+}
+
+.square.circle::before,
+.board.circle-is-next .square:not(.x):not(.circle):hover::before {
+        width: var(--mark-size);
+        height: var(--mark-size);
+}
+
+.square.circle::after {
+        width: calc(var(--mark-size) * 0.7);
+        height: calc(var(--mark-size) * 0.7);
+        background-color: rgb(242, 180, 167);
+}
+
+.board.circle-is-next .square.clickable:not(.x):not(.circle):hover::after {
+        width: calc(var(--mark-size) * 0.7);
+        height: calc(var(--mark-size) * 0.7);
+        background-color: rgb(178, 252, 167);
+}
+
+.square.clickable {
+        background-color: rgb(178, 252, 167);
+}
+
+.square.x,
+.square.circle {
+        background-color: rgb(242, 180, 167);
+}
+
+.progress-square {
+        width: var(--progress-square-size);
+        height: var(--progress-square-size);
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+}
+
+.progress-square:first-child,
+.progress-square:nth-child(2),
+.progress-square:nth-child(3) {
+        border-top: none;
+}
+
+.progress-square:nth-child(3n + 1) {
+        border-left: none;
+}
+
+.progress-square:nth-child(3n + 3) {
+        border-right: none;
+}
+
+.progress-square:last-child,
+.progress-square:nth-child(8),
+.progress-square:nth-child(7) {
+        border-bottom: none;
+}
+
+.progress-square.x::before,
+.progress-square.x::after,
+.progress-square.circle::before {
+        background-color: black;
+}
+
+.progress-square.x::before {
+        transform: rotate(45deg);
+}
+
+.progress-square.x::after {
+        transform: rotate(-45deg);
+}
+
+.progress-square.circle::before,
+.progress-square.circle::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+}
+
+.progress-square.x::before,
+.progress-square.x::after {
+        content: "";
+        position: absolute;
+        width: calc(var(--progress-mark-size) * 0.15);
+        height: var(--progress-mark-size);
+}
+
+.progress-square.circle::before {
+        width: var(--progress-mark-size);
+        height: var(--progress-mark-size);
+}
+
+.progress-square.circle::after {
+        width: calc(var(--progress-mark-size) * 0.7);
+        height: calc(var(--progress-mark-size) * 0.7);
+        background-color: white;
+}
+
+.progress-square.circle.winning-square {
+        background-color: rgb(178, 252, 167);
+}
+
+.progress-square.circle.winning-square::after {
+        width: calc(var(--mark-size) * 0.7);
+        height: calc(var(--mark-size) * 0.7);
+        background-color: rgb(178, 252, 167);
+}
+
+.progress-square.x.winning-square {
+        background-color: rgb(178, 252, 167);
+}
+
+
+
+
+.tictactoe-profiles-selection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        /* background-color: #87cefa; */
+        background-size: cover;
+        background-position: center;
+        gap: 100px;
+}
+
+.header-card {
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 1rem;
+        text-align: center;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-top: 10px;
+}
+
+.cards-container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 75px;
+}
+
+.card {
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 10px;
+        text-align: center;
+        border-radius: 16px;
+        overflow: hidden;
+}
+
+/*form {
+    background-color: white;
+    padding: 0px 10px;
+    border-radius: 10px;
+}*/
+
+/*h1 {
+    color: rgb(77, 1, 77);
+    text-align: center;
+}*/
+
+.play-button {
+        width: 80px;
+        height: 50px;
+        border: none;
+        background-color: #515151;
+        color: white;
+        border-radius: 5px;
+        /*    font-weight: bold;*/
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 15px;
+        margin-bottom: 30px;
+        text-align: center;
+}
+
+.play-button:hover {
+        background: #6cf0c2;
+}
+
+.form-input {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        align-items: center;
+        margin-left: 50px;
+        margin-right: 50px;
+}
+
+.player-selection-container {
+        width: 250px;
+        text-align: left;
+}
+
+label {
+        font-size: 12px;
+        color: gray;
+}
+
+.db-error {
+        font-size: 12px;
+        padding: 3px;
+        color: red;
+}
+
+
+
+
+.tictactoe-gameplay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 250vh;
+        /* background-color: #87cefa; */
+        background-size: cover;
+        background-position: center;
+        gap: 100px;
+}
+
+.tictactoe-gameplay-cards-container {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 75px;
+}
+
+.tictactoe-gameplay-cards-container-boards {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 75px;
+}
+
+table,
+th,
+td {
+        border: 1px solid black;
+        padding: 8px;
+}
+
+th {
+        background-color: rgb(81, 81, 81);
+        color: white;
+}
+
+caption {
+        display: table-caption;
+        text-align: center;
+        caption-side: top;
+}
+
+.profile-names-container {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+}
+
+.profile-names-vs,
+.profile-name {
+        font-size: 40px;
+        margin-left: 20px;
+        font-weight: bold;
+}
+
+.move-button {
+        border: none;
+        background-color: #515151;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        width: 320px;
+}
+
+.reset-button,
+.descending-button {
+        width: auto;
+        height: 50px;
+        border: none;
+        background-color: #515151;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        text-align: center;
+}
+
+.reset-button:hover,
+.move-button:hover,
+.descending-button:hover {
+        background: #6cf0c2;
+}
