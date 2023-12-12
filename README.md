@@ -19,7 +19,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-* This project creates an advanced version of the well-known game TicTacToe, called TicTacToe Ultimate! In this version, players try to win the main game by competing in 9 sub-games. The location of each move determines the next sub-game to be played. The game history is saved so that players can undo moves and restart the game from any previous point.
+* This project creates an advanced version of the well-known game TicTacToe, called TicTacToe Ultimate! In this version, players try to win the main game by competing in 9 sub-games. The location of each move determines the next sub-game to be played. The game history is saved so that players can undo moves and restart the game from any previous point. To play the game, go to https://alt-browne.github.io/TicTacToeUltimate/
 
 ![demo](./src/assets/tttu-demo.gif)
 
